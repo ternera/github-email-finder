@@ -3,10 +3,7 @@ A Python tool that scans GitHub commit history to find email addresses associate
 
 ## Features
 - Extracts email addresses from commit history of a GitHub user
-- Filters out no-reply GitHub emails
-- Shows email frequency and the repositories where they were found
-- Option to include repositories the user has contributed to
-- Rich console output with progress indicators and formatted tables
+- Shows the repositories where the emails were found
 
 ## Installation
 ### Prerequisites
@@ -51,12 +48,11 @@ python3 script.py USERNAME
 
 ### Command Line Options
 - `USERNAME`: The GitHub username to search for (required)
-- `--token`, `-t`: GitHub personal access token (optional but recommended)
+- `--token`, `-t`: GitHub personal access token (optional but recommended - you will hit ratelimits quickly otherwise)
 - `--contributions`, `-c`: Include repositories the user has contributed to
 - `--verbose`, `-v`: Enable verbose output with additional details
 
 ### Examples
-Search for a user's email addresses:
 ```bash
 python3 script.py ternera
 ```
@@ -72,22 +68,21 @@ python3 script.py ternera --token ghp_xxxxxxxxxxxx
 ```
 
 ## GitHub Token
-While the tool works without a token, GitHub API has rate limits that may restrict your usage. To get a GitHub personal access token:
+While the tool works without a token, GitHub API has rate limits that will quickly restrict your usage. To get a GitHub personal access token:
 1. Go to [GitHub Settings > Developer settings > Personal access tokens](https://github.com/settings/tokens)
 2. Click "Generate new token"
 3. Give it a name and select the "public_repo" scope
 4. Click "Generate token" and copy the token
 
 ## How It Works
-1. Fetches the user's repositories using the GitHub API
-2. Optionally searches for repositories the user has contributed to
-3. For each repository, scans the commit history to find commits by the user
-4. Extracts email addresses from the commit author and committer data
-5. Filters out GitHub's no-reply email addresses
-6. Presents the results in a formatted table
+1. This script fetches the user's repositories using the GitHub API
+2. It can search in the repositories the user has contributed to, using the `--contributions` flag.
+3. For each repository, it scans the commit history to find commits by the user
+4. It extracts email addresses from the commit author and committer data
+5. It filters out GitHub's no-reply email addresses
+6. It presents the results in a formatted table
 
 ## Limitations
-- GitHub API rate limits may restrict usage without a token
 - Private repositories are only accessible if your user token has permissions to view them
 - The tool only finds emails used in commits, not emails in the user's profile
 - The search for contributed repositories is limited to 100 repositories
